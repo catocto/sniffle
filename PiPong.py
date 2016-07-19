@@ -37,8 +37,9 @@ class PiPong:
 		self.player1Bat = Bat(self.displaySize, "player1")
 		self.player2Bat = Bat(self.displaySize, "player2")
 		self.ball = Ball(self.displaySize)
+		self.resetButton = ResetButton(self.displaySize)
 		self.sprites = sprite.Group(self.player1Bat, self.player2Bat,
-		self.ball)
+		self.ball, self.resetButton)
 	
 	def run(self):
 		# Runs the game loop
@@ -136,7 +137,7 @@ class Bat(sprite.Sprite):
 		self.image = Surface((width, height))
 		
 		# Fill the image white
-		self.image.fill((255, 255, 255))
+		self.image.fill((255, 000, 000))
 		
 		# Create the sprites rectangle from the image
 		self.rect = self.image.get_rect()
@@ -264,7 +265,44 @@ class Ball(sprite.Sprite):
 			
 			# Set the balls new direction
 			self.vector = (deltaX, deltaY)
+class ResetButton(sprite.Sprite):
+	
+	def __init__(self, displaySize):
 			
+		# Initialize the sprite base class
+		super(ResetButton, self).__init__()
+		
+		# Get the display size for working out collisions later
+		self.displaySize = displaySize
+		
+		# Get a width and height values proportionate to the display size
+		width = displaySize[0] / 9
+		height = displaySize[1] / 30
+		
+		# Create an image for the sprite
+		self.image = Surface((width, height))
+		# button word color
+		fg = (255, 0, 0)
+		# color of the button's background
+		bg = (0, 0, 0)
+		#Button's wording
+		text = "Restart"
+		# load the default font
+		krypton = font.Font(None, 30)
+                ren = krypton.render(text, 0, fg, bg)
+		
+		
+		# Fill the image blue
+		self.image.fill(fg)
+		self.image.blit(ren, (0,0))
+		# Create the sprites rectangle from the image
+		self.rect = self.image.get_rect()
+		self.rect.right = displaySize[0]
+		self.rect.top = 0
+		
+			
+	
 if __name__ == '__main__':
 	game = PiPong()
 	game.run()
+
